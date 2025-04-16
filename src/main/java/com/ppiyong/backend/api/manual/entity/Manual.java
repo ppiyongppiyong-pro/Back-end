@@ -4,6 +4,8 @@ import com.ppiyong.backend.api.common.BaseEntity;
 import com.ppiyong.backend.api.manual.common.Category;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "manual")
 public class Manual extends BaseEntity {
@@ -25,8 +27,8 @@ public class Manual extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    @Column(name = "keyword")
-    private String keyword;
+    @OneToMany(mappedBy = "manual", cascade = CascadeType.ALL)
+    private List<ManualKeyword> manualKeywordList;
 
     @Column(name = "imgurl")
     private String imgurl;
