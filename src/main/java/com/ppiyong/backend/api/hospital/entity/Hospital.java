@@ -1,4 +1,4 @@
-package com.ppiyong.backend.api.emergencymap.entity;
+package com.ppiyong.backend.api.hospital.entity;
 
 import com.ppiyong.backend.api.common.BaseEntity;
 import jakarta.persistence.Column;
