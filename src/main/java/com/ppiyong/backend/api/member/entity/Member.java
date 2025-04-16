@@ -1,6 +1,7 @@
 package com.ppiyong.backend.api.member.entity;
 
 import com.ppiyong.backend.api.common.BaseEntity;
+import com.ppiyong.backend.api.member.common.Type;
 import jakarta.persistence.*;
 
 @Entity
@@ -31,4 +32,8 @@ public class Member extends BaseEntity {
 
     @Column(name = "address")
     private String address;
+
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
+    private Type type;
 }
