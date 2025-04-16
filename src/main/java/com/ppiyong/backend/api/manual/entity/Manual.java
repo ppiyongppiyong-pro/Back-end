@@ -1,6 +1,7 @@
 package com.ppiyong.backend.api.manual.entity;
 
 import com.ppiyong.backend.api.common.BaseEntity;
+import com.ppiyong.backend.api.manual.common.Category;
 import jakarta.persistence.*;
 
 @Entity
@@ -21,7 +22,8 @@ public class Manual extends BaseEntity {
     private String detail;
 
     @Column(name = "category")
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private Category category;
 
     @Column(name = "keyword")
     private String keyword;
