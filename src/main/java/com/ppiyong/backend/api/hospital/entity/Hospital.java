@@ -14,7 +14,7 @@ public class Hospital extends BaseEntity {
     // 추가된 메서드
     @Getter
     @Id
-    @Column(unique = true, nullable = false)
+    @Column(name = "place_id", unique = true, nullable = false)
     private String placeId;
 
     @Column(name = "place_name")
