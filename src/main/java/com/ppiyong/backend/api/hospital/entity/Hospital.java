@@ -1,20 +1,21 @@
 package com.ppiyong.backend.api.hospital.entity;
 
 import com.ppiyong.backend.api.common.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
+
+import java.util.List;
 
 @Entity
 @Table(name = "hospital")
 public class Hospital extends BaseEntity {
 
     // 추가된 메서드
-    @Getter
-    @Id
-    @Column(name = "place_id", unique = true, nullable = false)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "hospital_id", unique = true, nullable = false)
+    private Long hospitalId;
+
+    @Column(name = "place_id")
     private String placeId;
 
     @Column(name = "place_name")
@@ -26,6 +27,7 @@ public class Hospital extends BaseEntity {
     @Column(name = "road_address_name")
     private String roadAddressName;
 
+    // TODO : Enum class로 필터링 고려
     @Column(name = "category_name")
     private String categoryName;
 
@@ -33,8 +35,10 @@ public class Hospital extends BaseEntity {
     private String phone;
 
     @Column(name = "point_x")
-    private String x;
+    private float x;
 
     @Column(name = "point_y")
     private String y;
+    private float y;
+
 }
