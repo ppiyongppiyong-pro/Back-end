@@ -27,10 +27,12 @@ public class Manual extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    @OneToMany(mappedBy = "manual", cascade = CascadeType.ALL)
-    private List<ManualKeyword> manualKeywordList;
+    @Column(name = "keyword")
+    private String keyword;
 
     @Column(name = "imgurl")
     private String imgurl;
 
+    @OneToMany(mappedBy = "manual")
+    private List<LikedManual> likedManuals;
 }
