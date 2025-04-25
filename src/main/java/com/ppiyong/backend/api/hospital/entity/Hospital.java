@@ -38,7 +38,8 @@ public class Hospital extends BaseEntity {
     private float x;
 
     @Column(name = "point_y")
-    private String y;
     private float y;
 
+    @OneToMany(mappedBy = "hospital")
+    private List<LikedHospital> likedHospitals;
 }
