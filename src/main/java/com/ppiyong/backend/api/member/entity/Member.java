@@ -1,16 +1,19 @@
 package com.ppiyong.backend.api.member.entity;
 
 import com.ppiyong.backend.api.common.BaseEntity;
+import com.ppiyong.backend.api.member.common.Role;
 import com.ppiyong.backend.api.member.common.Type;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 @Entity
 @Table(name = "member")
+@Getter
 public class Member extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id", unique = true, nullable = false)
-    private Long id;
+    private Long memberId;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -36,4 +39,8 @@ public class Member extends BaseEntity {
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private Type type;
+
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }
