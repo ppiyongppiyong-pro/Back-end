@@ -40,6 +40,10 @@ dependencies {
     // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // cloud Feign Client
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation platform('org.springframework.cloud:spring-cloud-dependencies:2022.0.3')
 }
 
 tasks.named('test') {
