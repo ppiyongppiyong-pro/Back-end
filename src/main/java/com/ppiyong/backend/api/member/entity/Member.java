@@ -3,12 +3,16 @@ package com.ppiyong.backend.api.member.entity;
 import com.ppiyong.backend.api.common.BaseEntity;
 import com.ppiyong.backend.api.member.common.Role;
 import com.ppiyong.backend.api.member.common.Type;
+import com.ppiyong.backend.global.security.dto.response.SignupResponseDto;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 
 @Entity
 @Table(name = "member")
 @Getter
+@Builder
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class Member extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,4 +47,16 @@ public class Member extends BaseEntity {
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    public static SignupResponseDto toDto(Member member) {
+
+        return SignupResponseDto.builder()
+                .email(member.getEmail())
+                .username(member.getName())
+                .phoneNumber(member.getPhoneNumber())
+                .gender(member.getGender())
+                .parentPhoneNumber(member.getParentPhoneNumber())
+                .address(member.getAddress())
+                .build();
+    }
 }
