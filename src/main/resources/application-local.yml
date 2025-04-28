@@ -31,3 +31,9 @@ spring:
     kakao:
       client-id: ${KAKAO_REST_API_KEY}
       redirect-uri: ${KAKAO_CALLBACK}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+  api-docs:
+    path: /v3/api-docs
