@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.4.4'
+    id 'org.springframework.boot' version '3.1.9'
     id 'io.spring.dependency-management' version '1.1.7'
 }
 
@@ -54,7 +54,7 @@ dependencies {
 
     // cloud Feign Client
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-    implementation platform('org.springframework.cloud:spring-cloud-dependencies:2024.0.0')
+    implementation platform('org.springframework.cloud:spring-cloud-dependencies:2022.0.5')
 }
 
 tasks.named('test') {
