@@ -22,8 +22,8 @@ public class Hospital {
     @Column(name = "address_name")
     private String addressName;
 
-    @Column(name = "raod_address_name")
-    private String raodAddressName;
+    @Column(name = "road_address_name")
+    private String roadAddressName;
 
     @Column(name = "place_id")
     private String placeId;
