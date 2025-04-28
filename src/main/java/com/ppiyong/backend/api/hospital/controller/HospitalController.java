@@ -30,7 +30,7 @@ public class HospitalController {
             @RequestParam Float x,
             @RequestParam Float y,
             @RequestParam String categoryName, // String으로 받기!
-            @RequestHeader(name = "Authorization") String authToken
+            @RequestHeader(name = "Authorization",required = true) String authToken
     ) {
         Department department = null;
         if (categoryName != null && !"진료과 선택".equals(categoryName)) {
