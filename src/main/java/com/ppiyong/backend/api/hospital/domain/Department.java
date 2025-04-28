@@ -29,5 +29,6 @@ public enum Department {
             }
         }
         throw new IllegalArgumentException("Unknown department: " + displayName);
+
     }
 }
