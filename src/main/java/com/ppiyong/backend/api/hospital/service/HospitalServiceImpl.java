@@ -57,4 +57,5 @@ public class HospitalServiceImpl implements HospitalService {
         String[] parts = categoryName.split(">");
         return parts[parts.length - 1].trim();
     }
+
 }
