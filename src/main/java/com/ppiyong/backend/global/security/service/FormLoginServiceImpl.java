@@ -45,8 +45,8 @@ public class FormLoginServiceImpl implements FormLoginService{
         String encodedPassword = this.passwordEncoder.encode(requestDto.password());
         SignupRequestDto updatedRequestDto = new SignupRequestDto(
                 requestDto.email(),
-                encodedPassword,
                 requestDto.username(),
+                encodedPassword,
                 requestDto.phoneNumber(),
                 requestDto.gender(),
                 requestDto.parentPhoneNumber(),
