@@ -20,14 +20,14 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "카카오 로그인 API Controller", description = "카카오 로그인 API")
 public class KakaoLoginController {
 
-    private final KakaoLoginServiceImpl kakaoLoginServiceImpl;
+    private final KakaoLoginServiceImpl kakaoLoginService;
 
     @Operation(summary = "카카오 인가 코드 받기", description = """
             카카오 인가 코드를 받기 위한 url을 반환합니다.
             """)
     @GetMapping("/url/kakao")
     public String get() {
-        return kakaoLoginServiceImpl.getLoginUrl();
+        return kakaoLoginService.getLoginUrl();
     }
 
     @Operation(summary = "카카오 로그인", description = """
@@ -61,7 +61,7 @@ public class KakaoLoginController {
             @RequestParam String code,
             HttpServletResponse response
     ) throws CustomException {
-        return kakaoLoginServiceImpl.login(code, response);
+        return kakaoLoginService.login(code, response);
 
     }
 }
