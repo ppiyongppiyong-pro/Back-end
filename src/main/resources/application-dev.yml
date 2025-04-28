@@ -25,4 +25,4 @@ spring:
   security:
     kakao:
       client-id: ${KAKAO_REST_API_KEY}
-      redirect-uri: ${KAKAO_CALLBACK}
+      redirect-uri: ${DEV_KAKAO_CALLBACK}
