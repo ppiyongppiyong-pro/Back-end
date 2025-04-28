@@ -35,6 +35,13 @@ public enum ErrorCode {
     UNMATCHED_PASSWORD(404, "LE002", "비밀번호가 일치하지 않습니다."),
     SHOULD_PERMISSION(404, "LE003", "동의가 필요합니다."),
     UNMATCHED_CODE(404, "LE004", "인증 코드가 불일치합니다."),
+
+    // Hospital
+    HOSPITAL_NOT_FOUND(404, "HE001", "병원 정보를 찾을 수 없습니다."),
+    INVALID_HOSPITAL_DATA(400, "HE002", "유효하지 않은 병원 데이터입니다."),
+    INVALID_DEPARTMENT(400, "HE003", "유효하지 않은 진료과목입니다."),
+    MISSING_HOSPITAL_FIELDS(400, "HE004", "필수 병원 정보가 누락되었습니다."),
+    MISSING_AUTHORIZATION(401, "HE005", "인증 토큰이 필요합니다.")
     ;
 
     private final int status;

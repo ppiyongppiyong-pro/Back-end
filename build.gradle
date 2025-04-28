@@ -55,6 +55,9 @@ dependencies {
     // cloud Feign Client
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     implementation platform('org.springframework.cloud:spring-cloud-dependencies:2024.0.0')
+
+    //Jackson 라이브러리
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
 }
 
 tasks.named('test') {
