@@ -26,3 +26,8 @@ spring:
     redis:
       host: localhost
       port: 6379
+
+  security:
+    kakao:
+      client-id: ${KAKAO_REST_API_KEY}
+      redirect-uri: ${KAKAO_CALLBACK}
