@@ -41,7 +41,7 @@ public class HospitalInfo {
     }
 
     // "의료,건강 > 병원 > 내과" → "내과"만 추출해서 Enum 매칭
-    private static Department extractDepartment(String categoryName) {
+    private static Department extractDepartment(String categoryName)  {
         if (categoryName == null) return null;
         String[] parts = categoryName.split(">");
         String last = parts[parts.length - 1].trim();
