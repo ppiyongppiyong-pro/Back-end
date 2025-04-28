@@ -4,6 +4,8 @@ package com.ppiyong.backend.api.hospital.controller;
 import com.ppiyong.backend.api.hospital.domain.Department;
 import com.ppiyong.backend.api.hospital.dto.HospitalSearchResponse;
 import com.ppiyong.backend.api.hospital.service.HospitalService;
+import com.ppiyong.backend.global.exception.CustomException;
+import com.ppiyong.backend.global.exception.ErrorCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +32,23 @@ public class HospitalController {
             @RequestParam Float x,
             @RequestParam Float y,
             @RequestParam String categoryName, // String으로 받기!
-            @RequestHeader(name = "Authorization",required = true) String authToken
+            @RequestHeader(name = "Authorization",required = false) String authToken //토큰 필수 받기
     ) {
+
+        // --- 추가: 값 체크 ---
+        if (authToken == null || authToken.isEmpty()) {
+            throw CustomException.of(ErrorCode.EMPTY_TOKEN);
+        }
+        if (x == null) {
+            throw CustomException.of(ErrorCode.MISSING_X_COORDINATE);
+        }
+        if (y == null) {
+            throw CustomException.of(ErrorCode.MISSING_Y_COORDINATE);
+        }
+        if (categoryName == null || categoryName.isEmpty()) {
+            throw CustomException.of(ErrorCode.MISSING_CATEGORY_NAME);
+        }
+
         Department department = null;
         if (categoryName != null && !"진료과 선택".equals(categoryName)) {
             department = Department.from(categoryName); // displayName(한글) → Enum으로 변환
@@ -40,5 +57,8 @@ public class HospitalController {
                 hospitalService.searchHospitals(authToken, page, size, x, y, department)
         );
     }
+
+
+
 
 }
