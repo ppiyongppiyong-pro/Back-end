@@ -22,23 +22,19 @@ public record SignupRequestDto (
         @Schema(name = "보호자 전화번호", example = "010-1111-1111")
         String parentPhoneNumber,
         @Schema(name = "거주 주소", example = "서울특별시")
-        String address,
-        @Schema(name = "가입 형식", example = "FORM")
-        Type type,
-        @Schema(name = "가입 권한", example = "ROLE_USER")
-        Role role
+        String address
 ) {
         public Member toEntity() {
                 return Member.builder()
                         .email(this.email())
                         .password(this.password())
-                        .name(this.username())  // 여기서 'this'는 record의 getter를 사용합니다
+                        .name(this.username())
                         .phoneNumber(this.phoneNumber())
                         .gender(this.gender())
                         .parentPhoneNumber(this.parentPhoneNumber())
                         .address(this.address())
-                        .type(this.type())
-                        .role(this.role())
+                        .type(Type.FORM)
+                        .role(Role.ROLE_USER)
                         .build();
         }
 }

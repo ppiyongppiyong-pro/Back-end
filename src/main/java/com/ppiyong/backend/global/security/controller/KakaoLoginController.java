@@ -2,7 +2,7 @@ package com.ppiyong.backend.global.security.controller;
 
 import com.ppiyong.backend.global.exception.CustomException;
 import com.ppiyong.backend.global.security.dto.response.LoginResponseDto;
-import com.ppiyong.backend.global.security.service.KakaoLoginService;
+import com.ppiyong.backend.global.security.service.KakaoLoginServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "카카오 로그인 API Controller", description = "카카오 로그인 API")
 public class KakaoLoginController {
 
-    private final KakaoLoginService kakaoLoginService;
+    private final KakaoLoginServiceImpl kakaoLoginServiceImpl;
 
     @Operation(summary = "카카오 인가 코드 받기", description = """
             카카오 인가 코드를 받기 위한 url을 반환합니다.
             """)
     @GetMapping("/url/kakao")
     public String get() {
-        return kakaoLoginService.getLoginUrl();
+        return kakaoLoginServiceImpl.getLoginUrl();
     }
 
     @Operation(summary = "카카오 로그인", description = """
@@ -38,7 +38,7 @@ public class KakaoLoginController {
             @RequestParam String code,
             HttpServletResponse response
     ) throws CustomException {
-        return kakaoLoginService.login(code, response);
+        return kakaoLoginServiceImpl.login(code, response);
 
     }
 }

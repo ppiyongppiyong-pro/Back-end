@@ -50,9 +50,7 @@ public class FormLoginServiceImpl implements FormLoginService{
                 requestDto.phoneNumber(),
                 requestDto.gender(),
                 requestDto.parentPhoneNumber(),
-                requestDto.address(),
-                Type.FORM,
-                Role.ROLE_USER
+                requestDto.address()
         );
 
         Member member = updatedRequestDto.toEntity();
