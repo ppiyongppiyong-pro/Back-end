@@ -14,6 +14,13 @@ public class CommonControllerAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
+
+        String className = returnType.getDeclaringClass().getName();
+
+        if (className.contains("springdoc") || className.contains("OpenApiResource")) {
+            return false;
+        }
+
         return !ResponseEntity.class.isAssignableFrom(returnType.getParameterType())
                 && !String.class.isAssignableFrom(returnType.getParameterType());
 }

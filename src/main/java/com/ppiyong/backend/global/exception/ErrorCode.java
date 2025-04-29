@@ -33,6 +33,7 @@ public enum ErrorCode {
     FAILED_JWT_INFO(401, "TE006", "토큰으로부터 회원의 정보를 얻을 수 없습니다."),
     INVALID_JWT_SIGNATURE(401, "TE007", "유효하지 않은 서명의 JWT 토큰입니다."),
     UNSUPPORTED_JWT_TOKEN(401, "TE008", "지원하지 않는 형식의 JWT 토큰입니다."),
+    FAILED_KAKAO_REQUEST(401, "TE009", "카카오로부터 요청에 실패하였습니다."),
 
     // login
     UNAUTHORIZED(401, "LE001", "인증되지 않았습니다."),

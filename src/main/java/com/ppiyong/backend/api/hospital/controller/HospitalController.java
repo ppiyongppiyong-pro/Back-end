@@ -32,7 +32,7 @@ public class HospitalController {
             @RequestParam Float x,
             @RequestParam Float y,
             @RequestParam String categoryName, // String으로 받기!
-            @RequestHeader(name = "Authorization",required = false) String authToken //토큰 필수 받기
+            @RequestHeader(name = "Authorization",required = true) String authToken //토큰 필수 받기
     ) {
 
         // --- 추가: 값 체크 ---

@@ -71,7 +71,12 @@ public class SecurityConfig {
 
     private void setPermission(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/**").permitAll()  // 추후에 접근 설정 추가
+                .requestMatchers( "/v3/api-docs/**",
+                        "/swagger-ui/**",
+                        "/swagger-ui.html",
+                        "/swagger-resources/**",
+                        "/webjars/**",
+                        "/**").permitAll()  // TODO : 추후에 접근 설정 추가
                 .anyRequest().authenticated()
         );
     }
