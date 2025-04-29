@@ -2,19 +2,18 @@ package com.ppiyong.backend.api.hospital.entity;
 
 import com.ppiyong.backend.api.hospital.domain.Department;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @Entity
+@Table(name = "hospital")
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Hospital {
-
     @Id
     @Column(name = "hospital_id")
-    private Long hospitalId;
+    private Long hospitalId; //
 
     @Column(name = "place_name")
     private String placeName;
@@ -24,9 +23,6 @@ public class Hospital {
 
     @Column(name = "road_address_name")
     private String roadAddressName;
-
-    @Column(name = "place_id")
-    private String placeId;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "category_name")
@@ -40,4 +36,17 @@ public class Hospital {
 
     @Column(name = "point_y", precision = 10, scale = 6)
     private BigDecimal pointY;
+
+    @Builder
+    public Hospital(Long hospitalId, String placeName, String addressName, String roadAddressName,
+                    Department categoryName, String phone, BigDecimal pointX, BigDecimal pointY) {
+        this.hospitalId = hospitalId;
+        this.placeName = placeName;
+        this.addressName = addressName;
+        this.roadAddressName = roadAddressName;
+        this.categoryName = categoryName;
+        this.phone = phone;
+        this.pointX = pointX;
+        this.pointY = pointY;
+    }
 }
