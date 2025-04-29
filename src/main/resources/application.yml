@@ -20,3 +20,9 @@ spring:
     access:
       expiration: 86400 # 24시간
     secret: ${JWT_SECRET_KEY}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+  api-docs:
+    path: /v3/api-docs
