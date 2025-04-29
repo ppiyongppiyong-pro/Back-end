@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
 @RestController
-@RequestMapping("/api/v1/map")
+@RequestMapping("/api/v1/hospitals")
 @RequiredArgsConstructor
 @Tag(name = "EmergencyMap", description = "지도 관련 API")
 public class HospitalController {
