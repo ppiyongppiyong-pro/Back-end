@@ -2,7 +2,10 @@ package com.ppiyong.backend.api.hospital.dto;
 
 import com.ppiyong.backend.api.hospital.domain.Department;
 import com.ppiyong.backend.api.hospital.dto.KakaoRestApi.Document;
+import com.ppiyong.backend.api.hospital.entity.Hospital;
 import lombok.Getter;
+
+import java.math.BigDecimal;
 
 @Getter
 public class HospitalInfo {
@@ -12,22 +15,24 @@ public class HospitalInfo {
     private final String roadAddressName;
     private final Department department;
     private final String phone;
-    private final Float x;
-    private final Float y;
+    private final BigDecimal pointX;
+    private final BigDecimal pointY;
+    private final Boolean isLike;
 
     public HospitalInfo(Long id, String placeName, String addressName, String roadAddressName,
-                        Department department, String phone, Float x, Float y) {
+                        Department department, String phone, BigDecimal pointX, BigDecimal pointY, Boolean isLike) {
         this.id = id;
         this.placeName = placeName;
         this.addressName = addressName;
         this.roadAddressName = roadAddressName;
         this.department = department;
         this.phone = phone;
-        this.x = x;
-        this.y = y;
+        this.pointX = pointX;
+        this.pointY = pointY;
+        this.isLike = isLike;
     }
 
-    public static HospitalInfo of(Document document) {
+    public static HospitalInfo of(Document document, Boolean isLike) {
         return new HospitalInfo(
                 document.getId(),
                 document.getPlaceName(),
@@ -35,8 +40,9 @@ public class HospitalInfo {
                 document.getRoadAddressName(),
                 extractDepartment(document.getCategoryName()),
                 document.getPhone(),
-                document.getX(),
-                document.getY()
+                document.getPointX(),
+                document.getPointY(),
+                isLike
         );
     }
 
@@ -51,4 +57,37 @@ public class HospitalInfo {
             return null;
         }
     }
+
+    // 병원 즐겨찾기 목록 변환
+    public static HospitalInfo of(Hospital hospital, Boolean isLike) {
+        return new HospitalInfo(
+                hospital.getHospitalId(),
+                hospital.getPlaceName(),
+                hospital.getAddressName(),
+                hospital.getRoadAddressName(),
+                hospital.getCategoryName(),
+                hospital.getPhone(),
+                hospital.getPointX(),
+                hospital.getPointY(),
+                isLike
+        );
+    }
+
+    // 문서 변환 (카카오 API 등)
+    public static HospitalInfo createDocument(Document document, boolean isLike) {
+        return new HospitalInfo(
+                document.getId(),
+                document.getPlaceName(),
+                document.getAddressName(),
+                document.getRoadAddressName(),
+                extractDepartment(document.getCategoryName()), // 수정: Department.getCategoryName() → extractDepartment
+                document.getPhone(),
+                document.getPointX(),
+                document.getPointY(),
+                isLike
+        );
+    }
+
+    // final 변수이므로 setter/변경 메서드 삭제
+    // public void likedDocument() { ... }  // 삭제
 }
