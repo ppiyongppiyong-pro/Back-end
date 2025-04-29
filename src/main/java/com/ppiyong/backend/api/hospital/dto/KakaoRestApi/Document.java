@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,12 +34,21 @@ public class Document {
     @JsonProperty("road_address_name")
     private String roadAddressName;
 
-    private Float x; //x가 경도
-    private Float y; //x가 위도
+    @JsonProperty("x")
+    private BigDecimal pointX; //x가 경도
+    @JsonProperty("y")
+    private BigDecimal pointY; //y가 위도
+
     @JsonProperty("place_url")
     private String placeUrl;
 
     private String distance;
+
+    private Boolean isLike = false;
+
+    public void favorite() {
+        this.isLike = true;
+    }
 
 
 
