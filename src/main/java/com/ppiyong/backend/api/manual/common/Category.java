@@ -15,4 +15,13 @@ public enum Category {
     public String getDisplayName() {
         return displayName;
     }
+
+    public static Category fromDisplayName(String displayName) {
+        for (Category category : Category.values()) {
+            if (category.displayName.equals(displayName)) {
+                return category;
+            }
+        }
+        throw new IllegalArgumentException("잘못된 카테고리명: " + displayName);
+    }
 }
