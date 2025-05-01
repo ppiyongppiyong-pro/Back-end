@@ -51,8 +51,8 @@ public class ManualService {
 
 
     // 4. 매뉴얼 상세 조회
-    public ManualDetailRespondDto getManualDetail(Long manualId) {
-        Manual manual = manualRepository.findById(manualId)
+    public ManualDetailRespondDto getManualDetail(String name) {
+        Manual manual = manualRepository.findByName(name)
                 .orElseThrow(() -> new RuntimeException("매뉴얼을 찾을 수 없습니다."));
         return manualMapper.toDetailDto(manual);
     }
