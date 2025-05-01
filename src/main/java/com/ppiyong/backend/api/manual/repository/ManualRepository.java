@@ -6,10 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ManualRepository extends JpaRepository<Manual, Long> {
     List<Manual> findByNameContaining(String name);
     List<Manual> findByCategory(Category category);
+
+    Optional<Manual> findByName(String name);
 
     @Query("SELECT m.name FROM Manual m WHERE m.name LIKE %:Name%")
     List<String> autocompleteByName(String Name);
