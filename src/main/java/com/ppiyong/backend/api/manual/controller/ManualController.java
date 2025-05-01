@@ -57,10 +57,10 @@ public class ManualController {
             해당하는 응급상황 이름에 대한 대처 세부내용을 반환합니다.<br>
             헤더에 accessToken을 넣어주세요.<br>
             """, parameters = {@Parameter(name = "EmergencyName", description = "응급상황 이름", schema = @Schema(type = "string", example = "심장마비"))})
-    @GetMapping("/{manualId}")
+    @GetMapping("/{name}")
     public ResponseEntity<CommonResponse<ManualDetailRespondDto>> getManualDetail(
-            @PathVariable Long manualId) {
-        ManualDetailRespondDto data = manualService.getManualDetail(manualId);
+            @PathVariable String name) {
+        ManualDetailRespondDto data = manualService.getManualDetail(name);
         return ResponseEntity.ok(CommonResponse.ok(data));
     }
 
@@ -96,13 +96,13 @@ public class ManualController {
             매뉴얼 정보를 즐겨찾기합니다.<br>
             헤더에 accessToken을 넣어주세요.<br>
             """, parameters = {
-            @Parameter(name = "manualId", description = "매뉴얼ID", schema = @Schema(type = "int", example = "2"))
+            @Parameter(name = "name", description = "매뉴얼이름", schema = @Schema(type = "int", example = "2"))
     })
-    @PostMapping("/{manualId}/like")
+    @PostMapping("/{name}/like")
     public ResponseEntity<CommonResponse<Void>> likeManual(
-            @PathVariable Long manualId,
+            @PathVariable String name,
             @RequestHeader("Authorization") String authToken) {
-        likedManualService.likeManual(authToken, manualId);
+        likedManualService.likeManual(authToken, name);
         return ResponseEntity.ok(CommonResponse.ok(null)); // data 없음
     }
 
@@ -111,13 +111,13 @@ public class ManualController {
             매뉴얼 정보 즐겨찾기한것을 삭제합니다.<br>
             헤더에 accessToken을 넣어주세요.<br>
             """, parameters = {
-            @Parameter(name = "manualId", description = "매뉴얼ID", schema = @Schema(type = "int", example = "2"))
+            @Parameter(name = "name", description = "매뉴얼이름", schema = @Schema(type = "int", example = "2"))
     })
-    @DeleteMapping("/{manualId}/like")
+    @DeleteMapping("/{name}/like")
     public ResponseEntity<CommonResponse<Void>> unlikeManual(
-            @PathVariable Long manualId,
+            @PathVariable String name,
             @RequestHeader("Authorization") String authToken) {
-        likedManualService.unlikeManual(authToken, manualId);
+        likedManualService.unlikeManual(authToken, name);
         return ResponseEntity.ok(CommonResponse.ok(null)); // data 없음
     }
 
