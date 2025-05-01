@@ -10,7 +10,9 @@ import java.util.Optional;
 
 public interface LikedManualRepository extends JpaRepository<LikedManual, Long> {
     Optional<LikedManual> findByMemberAndManual(Member member, Manual manual);
+
     List<LikedManual> findByMember(Member member);
+
     List<LikedManual> findByMemberAndIsLikeTrue(Member member);
 
 }
