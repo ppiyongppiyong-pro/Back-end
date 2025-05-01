@@ -27,11 +27,11 @@ public class LikedManualService {
     private final TokenProvider tokenProvider;
 
     // 1. 매뉴얼 좋아요 추가
-    public void likeManual(String authToken, Long manualId) {
+    public void likeManual(String authToken, String name) {
         Long memberId = tokenProvider.getMemberIdFromToken(authToken);
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new RuntimeException("회원을 찾을 수 없습니다."));
-        Manual manual = manualRepository.findById(manualId)
+        Manual manual = manualRepository.findByName(name)
                 .orElseThrow(() -> new RuntimeException("매뉴얼을 찾을 수 없습니다."));
 
         LikedManual likedManual = likedManualRepository.findByMemberAndManual(member, manual)
@@ -44,12 +44,11 @@ public class LikedManualService {
         likedManualRepository.save(likedManual);
     }
 
-    // 2. 매뉴얼 좋아요 취소
-    public void unlikeManual(String authToken, Long manualId) {
+    public void unlikeManual(String authToken, String name) {
         Long memberId = tokenProvider.getMemberIdFromToken(authToken);
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new RuntimeException("회원을 찾을 수 없습니다."));
-        Manual manual = manualRepository.findById(manualId)
+        Manual manual = manualRepository.findByName(name)
                 .orElseThrow(() -> new RuntimeException("매뉴얼을 찾을 수 없습니다."));
 
         LikedManual likedManual = likedManualRepository.findByMemberAndManual(member, manual)
@@ -58,6 +57,7 @@ public class LikedManualService {
         likedManual.setIsLike(false);
         likedManualRepository.save(likedManual);
     }
+
 
     // 3. 내가 좋아요한 매뉴얼 목록 조회
     @Transactional(readOnly = true)
