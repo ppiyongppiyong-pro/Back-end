@@ -1,22 +1,19 @@
 package com.ppiyong.backend.api.hospital.entity;
 
-import com.ppiyong.backend.api.common.BaseEntity;
+import com.ppiyong.backend.api.hospital.domain.Department;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "hospital")
-public class Hospital extends BaseEntity {
-
-    // 추가된 메서드
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "hospital_id", unique = true, nullable = false)
-    private Long hospitalId;
-
-    @Column(name = "place_id")
-    private String placeId;
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Hospital {
+    @Id
+    @Column(name = "hospital_id")
+    private Long hospitalId; //
 
     @Column(name = "place_name")
     private String placeName;
@@ -27,19 +24,29 @@ public class Hospital extends BaseEntity {
     @Column(name = "road_address_name")
     private String roadAddressName;
 
-    // TODO : Enum class로 필터링 고려
+    @Enumerated(EnumType.STRING)
     @Column(name = "category_name")
-    private String categoryName;
+    private Department categoryName;
 
     @Column(name = "phone")
     private String phone;
 
-    @Column(name = "point_x")
-    private float x;
+    @Column(name = "point_x", precision = 9, scale = 6)
+    private BigDecimal pointX;
 
-    @Column(name = "point_y")
-    private float y;
+    @Column(name = "point_y", precision = 10, scale = 6)
+    private BigDecimal pointY;
 
-    @OneToMany(mappedBy = "hospital")
-    private List<LikedHospital> likedHospitals;
+    @Builder
+    public Hospital(Long hospitalId, String placeName, String addressName, String roadAddressName,
+                    Department categoryName, String phone, BigDecimal pointX, BigDecimal pointY) {
+        this.hospitalId = hospitalId;
+        this.placeName = placeName;
+        this.addressName = addressName;
+        this.roadAddressName = roadAddressName;
+        this.categoryName = categoryName;
+        this.phone = phone;
+        this.pointX = pointX;
+        this.pointY = pointY;
+    }
 }
