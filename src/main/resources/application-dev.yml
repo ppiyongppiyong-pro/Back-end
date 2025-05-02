@@ -30,3 +30,14 @@ spring:
   map:
     kakao:
       api-key: ${KAKAO_MAP_API_KEY}
+
+  data:
+    redis:
+      host: ${DEV_REDIS_HOST}
+      port: 6379
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+  api-docs:
+    path: /v3/api-docs
