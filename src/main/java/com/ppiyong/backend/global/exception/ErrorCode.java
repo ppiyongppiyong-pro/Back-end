@@ -17,6 +17,10 @@ public enum ErrorCode {
 
 
     // Hospital
+    MISSING_X_COORDINATE(400, "RE002", "X 좌표가 없습니다."),
+    MISSING_Y_COORDINATE(400, "RE003", "Y 좌표가 없습니다."),
+    MISSING_CATEGORY_NAME(400, "RE004", "카테고리 이름이 없습니다."),
+
 
     // Token
     INVALID_TOKEN(401, "TE001","유효하지 않은 토큰입니다."),
