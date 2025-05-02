@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class KakaoFeignConfig {
 
-    @Value("${kakao.api.key}")
+    @Value("${spring.map.kakao.api-key}")
     private String kakaoApiKey;
 
     @Bean
