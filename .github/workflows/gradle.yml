@@ -33,7 +33,7 @@ jobs:
 
       # Docker container push
       - name: Push Docker Imgae
-        run: docker psuh ghcr.io/${{ secrets.ORG_NAME }}/ppiyong-api:latest
+        run: docker push ghcr.io/${{ secrets.ORG_NAME }}/ppiyong-api:latest
 
   transfer:
     runs-on: ubuntu-24.04
