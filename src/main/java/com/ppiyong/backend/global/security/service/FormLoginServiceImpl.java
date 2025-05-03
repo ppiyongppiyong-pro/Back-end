@@ -57,7 +57,7 @@ public class FormLoginServiceImpl implements FormLoginService{
         memberRepository.save(member);
 
         log.info("{" + requestDto.email() + "} : 회원 가입 완료");
-        return Member.toDto(member);
+        return Member.toSignupDto(member);
     }
 
     @Transactional
