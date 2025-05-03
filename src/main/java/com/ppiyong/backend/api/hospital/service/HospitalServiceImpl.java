@@ -14,6 +14,7 @@ import com.ppiyong.backend.global.auth.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -32,7 +33,6 @@ public class HospitalServiceImpl implements HospitalService {
 
     @Override
     public HospitalSearchResponse searchHospitals(String authToken, Integer page, Integer size, Float x, Float y, Department categoryName) {
-
         // 1. 사용자 정보 추출
         Long memberId = tokenProvider.getMemberIdFromToken(authToken);
         Member member = memberRepository.findById(memberId)
@@ -48,8 +48,12 @@ public class HospitalServiceImpl implements HospitalService {
                 x, y, categoryNameValue, radius, page, size, distance
         );
 
-        // 3. 필터링된 문서 가져오기
-        List<HospitalInfoOnMap> filteredHospitalInfoOnMaps = response.getHospitalInfoOnMaps();
+        // 3. 필터링된 문서 가져오기 (null-safe)
+        List<HospitalInfoOnMap> filteredHospitalInfoOnMaps =
+                response.getHospitalInfoOnMaps() != null
+                        ? response.getHospitalInfoOnMaps()
+                        : Collections.emptyList();
+
         if (effectiveCategory != null) {
             filteredHospitalInfoOnMaps = filteredHospitalInfoOnMaps.stream()
                     .filter(hospitalInfoOnMap ->
@@ -66,7 +70,7 @@ public class HospitalServiceImpl implements HospitalService {
                 .collect(Collectors.toSet());
 
         // 5. 응답 생성 (likedHospitalIds 전달)
-        return HospitalSearchResponse.ofFiltered(response, filteredHospitalInfoOnMaps, likedHospitalIds); // 수정
+        return HospitalSearchResponse.ofFiltered(response, filteredHospitalInfoOnMaps, likedHospitalIds);
     }
 
     private String extractDepartmentName(String categoryName) {
