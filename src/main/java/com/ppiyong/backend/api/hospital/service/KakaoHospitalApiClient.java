@@ -20,4 +20,5 @@ public interface KakaoHospitalApiClient {
             @RequestParam("size") int size,
             @RequestParam("sort") String distance
     );
+
 }
