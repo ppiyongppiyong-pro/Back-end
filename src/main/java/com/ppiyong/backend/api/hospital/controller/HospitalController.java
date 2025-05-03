@@ -5,11 +5,9 @@ import com.ppiyong.backend.api.hospital.dto.HospitalSearchResponse;
 import com.ppiyong.backend.api.hospital.service.HospitalService;
 import com.ppiyong.backend.global.exception.CustomException;
 import com.ppiyong.backend.global.exception.ErrorCode;
-import com.ppiyong.backend.global.response.CommonResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,7 +23,7 @@ public class HospitalController {
             헤더에 accessToken을 넣어주세요.<br>
             """)
     @GetMapping("/hospital")
-    public ResponseEntity<CommonResponse<HospitalSearchResponse>> getHospitals(
+    public HospitalSearchResponse getHospitals(
             @RequestParam(required = false, defaultValue = "1") Integer page,
             @RequestParam(required = false, defaultValue = "15") Integer size,
             @RequestParam Float x,
@@ -33,7 +31,6 @@ public class HospitalController {
             @RequestParam String categoryName,
             @RequestHeader(name = "Authorization") String authToken
     ) {
-        // 파라미터 유효성 검사
         if (authToken == null || authToken.isEmpty()) {
             throw CustomException.of(ErrorCode.EMPTY_TOKEN);
         }
@@ -44,14 +41,11 @@ public class HospitalController {
             throw CustomException.of(ErrorCode.MISSING_Y_COORDINATE);
         }
 
-        // 카테고리 변환
         Department department = null;
         if (categoryName != null && !"진료과 선택".equals(categoryName)) {
             department = Department.from(categoryName);
         }
 
-        // 서비스 호출 및 응답 포맷팅
-        HospitalSearchResponse response = hospitalService.searchHospitals(authToken, page, size, x, y, department);
-        return ResponseEntity.ok(CommonResponse.ok(response));
+        return hospitalService.searchHospitals(authToken, page, size, x, y, department);
     }
 }
