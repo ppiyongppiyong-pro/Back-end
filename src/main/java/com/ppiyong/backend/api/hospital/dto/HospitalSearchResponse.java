@@ -1,7 +1,7 @@
 package com.ppiyong.backend.api.hospital.dto;
 
-import com.ppiyong.backend.api.hospital.dto.KakaoRestApi.Document;
-import com.ppiyong.backend.api.hospital.dto.KakaoRestApi.KakaoCategorySearchResponse;
+import com.ppiyong.backend.api.hospital.dto.KakaoRestApi.HospitalInfoOnMap;
+import com.ppiyong.backend.api.hospital.dto.KakaoRestApi.MapHospitalSearchResult;
 import lombok.Getter;
 
 import java.util.List;
@@ -19,21 +19,21 @@ public class HospitalSearchResponse {
 
     // likedHospitalIds 추가
     public static HospitalSearchResponse ofFiltered(
-            KakaoCategorySearchResponse response,
-            List<Document> documents,
+            MapHospitalSearchResult response,
+            List<HospitalInfoOnMap> hospitalInfoOnMaps,
             Set<Long> likedHospitalIds // 추가
     ) {
         HospitalSearchMeta meta = new HospitalSearchMeta(
-                response.getMeta().getEnd(),
-                response.getMeta().getPageableCount()
+                response.getPaginationInfo().getEnd(),
+                response.getPaginationInfo().getPageableCount()
         );
 
         // isLike 값을 likedHospitalIds 기반으로 설정
-        List<HospitalInfo> hospitalInfos = documents.stream()
-                .map(document ->
+        List<HospitalInfo> hospitalInfos = hospitalInfoOnMaps.stream()
+                .map(hospitalInfoOnMap ->
                         HospitalInfo.of(
-                                document,
-                                likedHospitalIds.contains(document.getId()) // isLike 계산
+                                hospitalInfoOnMap,
+                                likedHospitalIds.contains(hospitalInfoOnMap.getId()) // isLike 계산
                         )
                 )
                 .toList();

@@ -3,8 +3,8 @@ package com.ppiyong.backend.api.hospital.service;
 import com.ppiyong.backend.api.hospital.domain.CategoryGroupCode;
 import com.ppiyong.backend.api.hospital.domain.Department;
 import com.ppiyong.backend.api.hospital.dto.HospitalSearchResponse;
-import com.ppiyong.backend.api.hospital.dto.KakaoRestApi.Document;
-import com.ppiyong.backend.api.hospital.dto.KakaoRestApi.KakaoCategorySearchResponse;
+import com.ppiyong.backend.api.hospital.dto.KakaoRestApi.HospitalInfoOnMap;
+import com.ppiyong.backend.api.hospital.dto.KakaoRestApi.MapHospitalSearchResult;
 import com.ppiyong.backend.api.hospital.entity.LikedHospital;
 import com.ppiyong.backend.api.hospital.repository.HospitalRepository;
 import com.ppiyong.backend.api.hospital.repository.LikedHospitalRepository;
@@ -43,18 +43,18 @@ public class HospitalServiceImpl implements HospitalService {
                 ? null : categoryName;
         String categoryNameValue = (effectiveCategory != null) ? effectiveCategory.getDisplayName() : null;
 
-        KakaoCategorySearchResponse response = kakaoHospitalApiClient.searchHospitals(
+        MapHospitalSearchResult response = kakaoHospitalApiClient.searchHospitals(
                 CategoryGroupCode.HP8.name(),
                 x, y, categoryNameValue, radius, page, size, distance
         );
 
         // 3. 필터링된 문서 가져오기
-        List<Document> filteredDocuments = response.getDocuments();
+        List<HospitalInfoOnMap> filteredHospitalInfoOnMaps = response.getHospitalInfoOnMaps();
         if (effectiveCategory != null) {
-            filteredDocuments = filteredDocuments.stream()
-                    .filter(document ->
-                            document.getCategoryName() != null &&
-                                    extractDepartmentName(document.getCategoryName()).equals(effectiveCategory.getDisplayName())
+            filteredHospitalInfoOnMaps = filteredHospitalInfoOnMaps.stream()
+                    .filter(hospitalInfoOnMap ->
+                            hospitalInfoOnMap.getCategoryName() != null &&
+                                    extractDepartmentName(hospitalInfoOnMap.getCategoryName()).equals(effectiveCategory.getDisplayName())
                     )
                     .toList();
         }
@@ -66,7 +66,7 @@ public class HospitalServiceImpl implements HospitalService {
                 .collect(Collectors.toSet());
 
         // 5. 응답 생성 (likedHospitalIds 전달)
-        return HospitalSearchResponse.ofFiltered(response, filteredDocuments, likedHospitalIds); // 수정
+        return HospitalSearchResponse.ofFiltered(response, filteredHospitalInfoOnMaps, likedHospitalIds); // 수정
     }
 
     private String extractDepartmentName(String categoryName) {

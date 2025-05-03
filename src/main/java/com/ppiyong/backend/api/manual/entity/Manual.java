@@ -13,7 +13,9 @@ public class Manual {
     @Column(name = "manual_id")
     private Long manualId;
 
+    @Column(name="name")
     private String name;
+
     @Column(name = "manual_summary")
     private String manualSummary;
     @Lob

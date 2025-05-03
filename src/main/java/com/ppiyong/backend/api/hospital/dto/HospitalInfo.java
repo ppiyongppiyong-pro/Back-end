@@ -1,7 +1,7 @@
 package com.ppiyong.backend.api.hospital.dto;
 
 import com.ppiyong.backend.api.hospital.domain.Department;
-import com.ppiyong.backend.api.hospital.dto.KakaoRestApi.Document;
+import com.ppiyong.backend.api.hospital.dto.KakaoRestApi.HospitalInfoOnMap;
 import com.ppiyong.backend.api.hospital.entity.Hospital;
 import lombok.Getter;
 
@@ -32,16 +32,16 @@ public class HospitalInfo {
         this.isLike = isLike;
     }
 
-    public static HospitalInfo of(Document document, Boolean isLike) {
+    public static HospitalInfo of(HospitalInfoOnMap hospitalInfoOnMap, Boolean isLike) {
         return new HospitalInfo(
-                document.getId(),
-                document.getPlaceName(),
-                document.getAddressName(),
-                document.getRoadAddressName(),
-                extractDepartment(document.getCategoryName()),
-                document.getPhone(),
-                document.getPointX(),
-                document.getPointY(),
+                hospitalInfoOnMap.getId(),
+                hospitalInfoOnMap.getPlaceName(),
+                hospitalInfoOnMap.getAddressName(),
+                hospitalInfoOnMap.getRoadAddressName(),
+                extractDepartment(hospitalInfoOnMap.getCategoryName()),
+                hospitalInfoOnMap.getPhone(),
+                hospitalInfoOnMap.getPointX(),
+                hospitalInfoOnMap.getPointY(),
                 isLike
         );
     }
@@ -74,16 +74,16 @@ public class HospitalInfo {
     }
 
     // 문서 변환 (카카오 API 등)
-    public static HospitalInfo createDocument(Document document, boolean isLike) {
+    public static HospitalInfo createDocument(HospitalInfoOnMap hospitalInfoOnMap, boolean isLike) {
         return new HospitalInfo(
-                document.getId(),
-                document.getPlaceName(),
-                document.getAddressName(),
-                document.getRoadAddressName(),
-                extractDepartment(document.getCategoryName()), // 수정: Department.getCategoryName() → extractDepartment
-                document.getPhone(),
-                document.getPointX(),
-                document.getPointY(),
+                hospitalInfoOnMap.getId(),
+                hospitalInfoOnMap.getPlaceName(),
+                hospitalInfoOnMap.getAddressName(),
+                hospitalInfoOnMap.getRoadAddressName(),
+                extractDepartment(hospitalInfoOnMap.getCategoryName()), // 수정: Department.getCategoryName() → extractDepartment
+                hospitalInfoOnMap.getPhone(),
+                hospitalInfoOnMap.getPointX(),
+                hospitalInfoOnMap.getPointY(),
                 isLike
         );
     }
