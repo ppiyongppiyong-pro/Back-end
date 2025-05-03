@@ -13,6 +13,8 @@ import com.ppiyong.backend.api.manual.repository.ManualRepository;
 import com.ppiyong.backend.api.member.entity.Member;
 import com.ppiyong.backend.api.member.repository.MemberRepository;
 import com.ppiyong.backend.global.auth.TokenProvider;
+import com.ppiyong.backend.global.exception.CustomException;
+import com.ppiyong.backend.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -59,7 +61,7 @@ public class ManualService {
     // 4. 매뉴얼 상세 조회
     public ManualDetailRespondDto getManualDetail(String name) {
         Manual manual = manualRepository.findByName(name)
-                .orElseThrow(() -> new RuntimeException("매뉴얼을 찾을 수 없습니다."));
+                .orElseThrow(() -> CustomException.of(ErrorCode.MANUAL_NOT_FOUND));
         return manualMapper.toDetailDto(manual);
     }
 
