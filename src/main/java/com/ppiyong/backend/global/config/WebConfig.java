@@ -1,4 +1,4 @@
-package com.ppiyong.backend.api.manual.config;
+package com.ppiyong.backend.global.config;
 
 import com.ppiyong.backend.api.manual.converter.StringToCategoryConverter;
 import org.springframework.context.annotation.Configuration;
