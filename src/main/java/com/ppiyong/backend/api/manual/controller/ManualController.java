@@ -26,9 +26,7 @@ public class ManualController {
             헤더에 accessToken을 넣어주세요.<br>
             """, parameters = {
             @Parameter(name = "emergencyName", description = "응급상황 이름", schema = @Schema(type = "string", example = "실신")),
-
     })
-
     @GetMapping
     public List<ManualRespondDto> getManuals(@RequestParam(required = false) String name) {
         return manualService.getManuals(name);
@@ -39,7 +37,6 @@ public class ManualController {
             카테고리 별로 매뉴얼을 조회합니다.<br>
             헤더에 accessToken을 넣어주세요.<br>
             """, parameters = {@Parameter(name = "Category", description = "카테고리 이름", schema = @Schema(type = "string", example = "의학적"))})
-
     @GetMapping("/category")
     public List<ManualCategoryRespondDto> getManualsByCategory(@RequestParam String category) {
         return manualService.getManualsByCategory(category);
@@ -72,7 +69,6 @@ public class ManualController {
             """, parameters = {
             @Parameter(name = "keyword", description = "검색 키워드", schema = @Schema(type = "string", example = "심장"))
     })
-
     @GetMapping("/keyword")
     public List<ManualKeywordRespondDto> searchByKeyword(@RequestParam String keyword) {
         return manualService.searchByKeyword(keyword);
@@ -108,5 +104,4 @@ public class ManualController {
     public List<ManualRespondDto> getLikedManuals(@RequestHeader("Authorization") String authToken) {
         return manualService.getLikedManuals(authToken);
     }
-
 }
