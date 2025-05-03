@@ -25,6 +25,7 @@ public class HospitalInfoOnMap {
     @JsonProperty("category_group_name")
     private String categoryGroupName;
 
+    @JsonProperty("phone")
     private String phone;
 
     @JsonProperty("address_name")
@@ -45,15 +46,6 @@ public class HospitalInfoOnMap {
 
     private Boolean isLike = false;
 
-    public void favorite() {
-        this.isLike = true;
-    }
-
-
-
-//    public void favorite() {
-//        this.isFavorite = true;
-//    }
 
 
 }
