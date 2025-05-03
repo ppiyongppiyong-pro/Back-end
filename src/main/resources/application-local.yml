@@ -32,6 +32,10 @@ spring:
       client-id: ${KAKAO_REST_API_KEY}
       redirect-uri: ${KAKAO_CALLBACK}
 
+  map:
+    kakao:
+      api-key: ${KAKAO_MAP_API_KEY}
+
 springdoc:
   swagger-ui:
     path: /swagger-ui
