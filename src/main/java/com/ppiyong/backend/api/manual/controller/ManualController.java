@@ -108,4 +108,5 @@ public class ManualController {
     public List<ManualRespondDto> getLikedManuals(@RequestHeader("Authorization") String authToken) {
         return manualService.getLikedManuals(authToken);
     }
+
 }
