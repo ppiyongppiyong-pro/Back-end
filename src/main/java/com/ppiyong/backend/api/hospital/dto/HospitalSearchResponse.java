@@ -2,6 +2,7 @@ package com.ppiyong.backend.api.hospital.dto;
 
 import com.ppiyong.backend.api.hospital.dto.KakaoRestApi.HospitalInfoOnMap;
 import com.ppiyong.backend.api.hospital.dto.KakaoRestApi.MapHospitalSearchResult;
+import com.ppiyong.backend.api.hospital.dto.KakaoRestApi.PaginationInfo;
 import lombok.Getter;
 
 import java.util.List;
@@ -23,10 +24,13 @@ public class HospitalSearchResponse {
             List<HospitalInfoOnMap> hospitalInfoOnMaps,
             Set<Long> likedHospitalIds // 추가
     ) {
-        HospitalSearchMeta meta = new HospitalSearchMeta(
-                response.getPaginationInfo().getEnd(),
-                response.getPaginationInfo().getPageableCount()
-        );
+        // PaginationInfo null 체크
+        PaginationInfo paginationInfo = response.getPaginationInfo();
+        boolean end = paginationInfo != null ? paginationInfo.getEnd() : false;
+        int pageableCount = paginationInfo != null ? paginationInfo.getPageableCount() : 0;
+
+        HospitalSearchMeta meta = new HospitalSearchMeta(end, pageableCount);
+
 
         // isLike 값을 likedHospitalIds 기반으로 설정
         List<HospitalInfo> hospitalInfos = hospitalInfoOnMaps.stream()
