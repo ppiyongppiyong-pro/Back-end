@@ -87,7 +87,7 @@ jobs:
             docker pull ghcr.io/${{ secrets.ORG_NAME }}/ppiyong-api:latest
             
             # 6. restart container
-            docker-compose up -d --no-deps --force-recreate ppiyong-api
+            docker compose up -d --no-deps --force-recreate ppiyong-api
             
             # 7. remove oldest image
             docker image prune -a -f
