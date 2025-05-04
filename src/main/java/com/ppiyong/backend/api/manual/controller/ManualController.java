@@ -31,9 +31,6 @@ public class ManualController {
     @GetMapping
     public List<ManualRespondDto> getManuals(@RequestParam(required = false) String name) {
 
-        if (name == null || name.isBlank()) {
-            throw CustomException.of(ErrorCode.MISSING_NAME_PARAM);
-        }
         return manualService.getManuals(name);
     }
 
@@ -43,6 +40,8 @@ public class ManualController {
             """, parameters = {@Parameter(name = "Category", description = "카테고리 이름", schema = @Schema(type = "string", example = "의학적"))})
     @GetMapping("/category")
     public List<ManualCategoryRespondDto> getManualsByCategory(@RequestParam String category) {
+
+        // TODO: 서비스 로직에 반영
         if (category == null || category.isBlank()) {
             throw CustomException.of(ErrorCode.MISSING_CATEGORY_PARAM);
         }
@@ -55,6 +54,8 @@ public class ManualController {
             """, parameters = {@Parameter(name = "EmergencyName", description = "응급상황 이름", schema = @Schema(type = "string", example = "심장마비"))})
     @GetMapping("/{name}")
     public ManualDetailRespondDto getManualDetail(@PathVariable String name) {
+
+        // TODO : 서비스 로직에 반영
         if (name == null || name.isBlank()) {
             throw CustomException.of(ErrorCode.MISSING_PATH_VARIABLE);
         }
@@ -67,6 +68,8 @@ public class ManualController {
             """, parameters = {@Parameter(name = "EmergencyName", description = "검색할 응급상황이름", schema = @Schema(type = "string", example = "심장"))})
     @GetMapping("/autocomplete")
     public List<String> autocomplete(@RequestParam String name) {
+
+        // TODO: 서비스 로직에 반영
         if (name == null || name.isBlank()) {
             throw CustomException.of(ErrorCode.MISSING_NAME_PARAM);
         }
@@ -81,6 +84,8 @@ public class ManualController {
     })
     @GetMapping("/keyword")
     public List<ManualKeywordRespondDto> searchByKeyword(@RequestParam String keyword) {
+
+        // TODO: 서비스 로직에 반영
         if (keyword == null || keyword.isBlank()) {
             throw CustomException.of(ErrorCode.MISSING_KEYWORD_PARAM);
         }
