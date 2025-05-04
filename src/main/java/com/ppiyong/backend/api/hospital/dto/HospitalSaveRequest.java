@@ -37,40 +37,6 @@ public class HospitalSaveRequest {
     @NotNull(message = "y(위도)좌표는 필수입니다")
     private BigDecimal pointY;
 
-    public void validateFields() {
-        if (hospitalId == null ) {
-            throw new IllegalArgumentException("placeId 값이 필요합니다.");
-        }
-
-        if (placeName == null || placeName.isEmpty()) {
-            throw new IllegalArgumentException("placeName 값이 필요합니다.");
-        }
-
-        if (addressName == null || addressName.isEmpty()) {
-            throw new IllegalArgumentException("addressName 값이 필요합니다.");
-        }
-
-        if (roadAddressName == null || roadAddressName.isEmpty()) {
-            throw new IllegalArgumentException("roadAddressName 값이 필요합니다.");
-        }
-
-        if (categoryName == null ) {
-            throw new IllegalArgumentException("categoryName 값이 필요합니다.");
-        }
-
-        if (phone == null || phone.isEmpty()) {
-            throw new IllegalArgumentException("phone 값이 필요합니다.");
-        }
-
-        if (pointX == null ) {
-            throw new IllegalArgumentException("x 값이 필요합니다.");
-        }
-
-        if (pointY == null ) {
-            throw new IllegalArgumentException("y 값이 필요합니다.");
-        }
-    }
-
 
 
 }
