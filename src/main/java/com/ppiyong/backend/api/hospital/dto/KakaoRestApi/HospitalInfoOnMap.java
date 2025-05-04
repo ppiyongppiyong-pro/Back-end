@@ -1,7 +1,6 @@
 package com.ppiyong.backend.api.hospital.dto.KakaoRestApi;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ppiyong.backend.api.hospital.domain.Department;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +10,7 @@ import java.math.BigDecimal;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Document {
+public class HospitalInfoOnMap {
     private Long id;
 
     @JsonProperty("place_name")
@@ -26,6 +25,7 @@ public class Document {
     @JsonProperty("category_group_name")
     private String categoryGroupName;
 
+    @JsonProperty("phone")
     private String phone;
 
     @JsonProperty("address_name")
@@ -46,15 +46,6 @@ public class Document {
 
     private Boolean isLike = false;
 
-    public void favorite() {
-        this.isLike = true;
-    }
-
-
-
-//    public void favorite() {
-//        this.isFavorite = true;
-//    }
 
 
 }

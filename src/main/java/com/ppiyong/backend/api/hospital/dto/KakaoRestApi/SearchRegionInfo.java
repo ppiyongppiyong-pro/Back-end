@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SameName {
+public class SearchRegionInfo {
     private String[] region;
 
     private String keyword;

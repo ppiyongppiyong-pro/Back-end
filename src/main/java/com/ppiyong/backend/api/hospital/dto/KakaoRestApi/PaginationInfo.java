@@ -7,9 +7,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class Meta {
+public class PaginationInfo {
     @JsonProperty("same_name")
-    private SameName sameName;
+    private SearchRegionInfo searchRegionInfo;
 
     @JsonProperty("total_count")
     private Integer totalCount;

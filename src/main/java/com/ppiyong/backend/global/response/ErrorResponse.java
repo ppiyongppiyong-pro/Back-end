@@ -2,9 +2,11 @@ package com.ppiyong.backend.global.response;
 
 import com.ppiyong.backend.global.exception.ErrorCode;
 import lombok.Builder;
+import lombok.Getter;
 import org.springframework.http.ResponseEntity;
 
 @Builder
+@Getter
 public class ErrorResponse {
 
     private int status;

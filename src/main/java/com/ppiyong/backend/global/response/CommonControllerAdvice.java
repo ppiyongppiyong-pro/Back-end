@@ -28,7 +28,8 @@ public class CommonControllerAdvice implements ResponseBodyAdvice<Object> {
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
 
-        if (body instanceof CommonResponse<?>) {
+        // CommonResponse(일반) & ErrorResponse(오류) 제외
+        if (body instanceof CommonResponse<?> || body instanceof ErrorResponse) {
             return body;
         }
         return CommonResponse.ok(body);
