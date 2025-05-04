@@ -5,6 +5,8 @@ import com.ppiyong.backend.api.manual.dto.manualcategory.ManualCategoryRespondDt
 import com.ppiyong.backend.api.manual.dto.manualdetail.ManualDetailRespondDto;
 import com.ppiyong.backend.api.manual.dto.manualkeyword.ManualKeywordRespondDto;
 import com.ppiyong.backend.api.manual.service.ManualService;
+import com.ppiyong.backend.global.exception.CustomException;
+import com.ppiyong.backend.global.exception.ErrorCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -29,6 +31,9 @@ public class ManualController {
     })
     @GetMapping
     public List<ManualRespondDto> getManuals(@RequestParam(required = false) String name) {
+        if (name == null || name.isBlank()) {
+            throw CustomException.of(ErrorCode.MISSING_NAME_PARAM);
+        }
         return manualService.getManuals(name);
     }
 
@@ -39,6 +44,9 @@ public class ManualController {
             """, parameters = {@Parameter(name = "Category", description = "카테고리 이름", schema = @Schema(type = "string", example = "의학적"))})
     @GetMapping("/category")
     public List<ManualCategoryRespondDto> getManualsByCategory(@RequestParam String category) {
+        if (category == null || category.isBlank()) {
+            throw CustomException.of(ErrorCode.MISSING_CATEGORY_PARAM);
+        }
         return manualService.getManualsByCategory(category);
     }
 
@@ -49,6 +57,9 @@ public class ManualController {
             """, parameters = {@Parameter(name = "EmergencyName", description = "응급상황 이름", schema = @Schema(type = "string", example = "심장마비"))})
     @GetMapping("/{name}")
     public ManualDetailRespondDto getManualDetail(@PathVariable String name) {
+        if (name == null || name.isBlank()) {
+            throw CustomException.of(ErrorCode.MISSING_PATH_VARIABLE);
+        }
         return manualService.getManualDetail(name);
     }
 
@@ -59,6 +70,9 @@ public class ManualController {
             """, parameters = {@Parameter(name = "EmergencyName", description = "검색할 응급상황이름", schema = @Schema(type = "string", example = "심장"))})
     @GetMapping("/autocomplete")
     public List<String> autocomplete(@RequestParam String name) {
+        if (name == null || name.isBlank()) {
+            throw CustomException.of(ErrorCode.MISSING_NAME_PARAM);
+        }
         return manualService.autocomplete(name);
     }
 
@@ -71,6 +85,9 @@ public class ManualController {
     })
     @GetMapping("/keyword")
     public List<ManualKeywordRespondDto> searchByKeyword(@RequestParam String keyword) {
+        if (keyword == null || keyword.isBlank()) {
+            throw CustomException.of(ErrorCode.MISSING_KEYWORD_PARAM);
+        }
         return manualService.searchByKeyword(keyword);
     }
 
