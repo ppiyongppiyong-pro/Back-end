@@ -11,6 +11,8 @@ import com.ppiyong.backend.api.hospital.repository.LikedHospitalRepository;
 import com.ppiyong.backend.api.member.entity.Member;
 import com.ppiyong.backend.api.member.repository.MemberRepository;
 import com.ppiyong.backend.global.auth.TokenProvider;
+import com.ppiyong.backend.global.exception.CustomException;
+import com.ppiyong.backend.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +38,7 @@ public class HospitalServiceImpl implements HospitalService {
         // 1. 사용자 정보 추출
         Long memberId = tokenProvider.getMemberIdFromToken(authToken);
         Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+                .orElseThrow(() -> CustomException.of(ErrorCode.MEMBER_NOT_FOUND));
 
         // 2. 카카오 API로 병원 검색
         Department effectiveCategory = (categoryName != null && "진료과 선택".equals(categoryName.getDisplayName()))

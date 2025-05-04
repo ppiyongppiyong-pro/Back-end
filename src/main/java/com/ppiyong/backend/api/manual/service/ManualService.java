@@ -78,9 +78,9 @@ public class ManualService {
     public void likeManual(String authToken, String name) {
         Long memberId = tokenProvider.getMemberIdFromToken(authToken);
         Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new RuntimeException("회원을 찾을 수 없습니다."));
+                .orElseThrow(() -> CustomException.of(ErrorCode.MEMBER_NOT_FOUND));
         Manual manual = manualRepository.findByName(name)
-                .orElseThrow(() -> new RuntimeException("매뉴얼을 찾을 수 없습니다."));
+                .orElseThrow(() -> CustomException.of(ErrorCode.MANUAL_NOT_FOUND));
 
         LikedManual likedManual = likedManualRepository.findByMemberAndManual(member, manual)
                 .orElse(LikedManual.builder()
@@ -97,12 +97,12 @@ public class ManualService {
     public void unlikeManual(String authToken, String name) {
         Long memberId = tokenProvider.getMemberIdFromToken(authToken);
         Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new RuntimeException("회원을 찾을 수 없습니다."));
+                .orElseThrow(() -> CustomException.of(ErrorCode.MEMBER_NOT_FOUND));
         Manual manual = manualRepository.findByName(name)
-                .orElseThrow(() -> new RuntimeException("매뉴얼을 찾을 수 없습니다."));
+                .orElseThrow(() -> CustomException.of(ErrorCode.MANUAL_NOT_FOUND));
 
         LikedManual likedManual = likedManualRepository.findByMemberAndManual(member, manual)
-                .orElseThrow(() -> new RuntimeException("좋아요 정보가 없습니다."));
+                .orElseThrow(() -> CustomException.of(ErrorCode.MANUAL_IS_EMPTY)); //즐겨찾기 매뉴얼이 비어있음
 
         likedManual.setIsLike(false);
         likedManualRepository.save(likedManual);
@@ -112,7 +112,7 @@ public class ManualService {
     public List<ManualRespondDto> getLikedManuals(String authToken) {
         Long memberId = tokenProvider.getMemberIdFromToken(authToken);
         Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new RuntimeException("회원을 찾을 수 없습니다."));
+                .orElseThrow(() -> CustomException.of(ErrorCode.MEMBER_NOT_FOUND));
 
         List<LikedManual> likedManuals = likedManualRepository.findByMemberAndIsLikeTrue(member);
 
