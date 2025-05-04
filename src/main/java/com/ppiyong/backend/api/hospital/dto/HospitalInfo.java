@@ -73,20 +73,7 @@ public class HospitalInfo {
         );
     }
 
-    // 문서 변환 (카카오 API 등)
-    public static HospitalInfo createDocument(HospitalInfoOnMap hospitalInfoOnMap, boolean isLike) {
-        return new HospitalInfo(
-                hospitalInfoOnMap.getId(),
-                hospitalInfoOnMap.getPlaceName(),
-                hospitalInfoOnMap.getAddressName(),
-                hospitalInfoOnMap.getRoadAddressName(),
-                extractDepartment(hospitalInfoOnMap.getCategoryName()), // 수정: Department.getCategoryName() → extractDepartment
-                hospitalInfoOnMap.getPhone(),
-                hospitalInfoOnMap.getPointX(),
-                hospitalInfoOnMap.getPointY(),
-                isLike
-        );
-    }
+
 
     // final 변수이므로 setter/변경 메서드 삭제
     // public void likedDocument() { ... }  // 삭제
