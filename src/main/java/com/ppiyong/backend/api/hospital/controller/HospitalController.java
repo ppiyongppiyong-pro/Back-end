@@ -31,6 +31,9 @@ public class HospitalController {
             @RequestParam String categoryName,
             @RequestHeader(name = "Authorization") String authToken
     ) {
+
+        String token = authToken.startsWith("Bearer ") ? authToken.substring(7) : authToken;
+
         if (authToken == null || authToken.isEmpty()) {
             throw CustomException.of(ErrorCode.EMPTY_TOKEN);
         }
@@ -46,6 +49,6 @@ public class HospitalController {
             department = Department.from(categoryName);
         }
 
-        return hospitalService.searchHospitals(authToken, page, size, x, y, department);
+        return hospitalService.searchHospitals(token, page, size, x, y, department);
     }
 }
