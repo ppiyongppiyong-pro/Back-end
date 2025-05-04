@@ -8,6 +8,8 @@ import com.ppiyong.backend.api.hospital.repository.LikedHospitalRepository;
 import com.ppiyong.backend.api.member.entity.Member;
 import com.ppiyong.backend.api.member.repository.MemberRepository;
 import com.ppiyong.backend.global.auth.TokenProvider;
+import com.ppiyong.backend.global.exception.CustomException;
+import com.ppiyong.backend.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -29,8 +31,12 @@ public class LikeHospitalService {
 
     @Transactional
     public void like(String authToken, HospitalSaveRequest request) {
+        if (authToken == null || authToken.isEmpty()) {
+            throw CustomException.of(ErrorCode.EMPTY_TOKEN);
+        }
         Long memberId = tokenProvider.getMemberIdFromToken(authToken);
-        Member member = memberRepository.findById(memberId).orElseThrow();
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> CustomException.of(ErrorCode.MEMBER_NOT_FOUND));
 
         Hospital hospital = hospitalRepository.findByHospitalId(request.getHospitalId())
                 .orElseGet(() -> createHospitalFromRequest(request));
@@ -44,20 +50,30 @@ public class LikeHospitalService {
 
     @Transactional
     public void unlike(String authToken, Long hospitalId) {
+        if (authToken == null || authToken.isEmpty()) {
+            throw CustomException.of(ErrorCode.EMPTY_TOKEN);
+        }
         Long memberId = tokenProvider.getMemberIdFromToken(authToken);
-        Member member = memberRepository.findById(memberId).orElseThrow();
-        Hospital hospital = hospitalRepository.findByHospitalId(hospitalId).orElseThrow();
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> CustomException.of(ErrorCode.MEMBER_NOT_FOUND));
+        Hospital hospital = hospitalRepository.findByHospitalId(hospitalId)
+                .orElseThrow(() -> CustomException.of(ErrorCode.HOSPITAL_NOT_FOUND));
+
 
         LikedHospital likedHospital = likedHospitalRepository.findByMemberAndHospital(member, hospital)
-                .orElseThrow(() -> new IllegalArgumentException("좋아요 내역 없음"));
+                .orElseThrow(() -> CustomException.of(ErrorCode.HOSPITAL_IS_EMPTY));
 
         likedHospital.unlike();
         likedHospitalRepository.save(likedHospital);
     }
 
     public List<HospitalSaveRequest> getLikedHospitals(String authToken) {
+        if (authToken == null || authToken.isEmpty()) {
+            throw CustomException.of(ErrorCode.EMPTY_TOKEN);
+        }
         Long memberId = tokenProvider.getMemberIdFromToken(authToken);
-        Member member = memberRepository.findById(memberId).orElseThrow();
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> CustomException.of(ErrorCode.MEMBER_NOT_FOUND));
 
         return likedHospitalRepository.findByMemberAndIsLikeTrue(member).stream()
                 .map(lh -> convertToSaveRequest(lh.getHospital()))

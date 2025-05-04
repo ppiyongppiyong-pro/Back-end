@@ -31,14 +31,22 @@ public class HospitalController {
             @RequestParam String categoryName,
             @RequestHeader(name = "Authorization") String authToken
     ) {
+        // 1. 토큰 검증 (헤더가 없거나 빈 문자열인 경우)
         if (authToken == null || authToken.isEmpty()) {
             throw CustomException.of(ErrorCode.EMPTY_TOKEN);
         }
+
+        // 2. x, y 좌표 검증
         if (x == null) {
             throw CustomException.of(ErrorCode.MISSING_X_COORDINATE);
         }
         if (y == null) {
             throw CustomException.of(ErrorCode.MISSING_Y_COORDINATE);
+        }
+
+        // 카테고리 누락
+        if (categoryName == null || categoryName.isBlank()) {
+            throw CustomException.of(ErrorCode.MISSING_CATEGORY_NAME);
         }
 
         Department department = null;
