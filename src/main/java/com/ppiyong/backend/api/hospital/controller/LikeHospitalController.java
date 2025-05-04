@@ -2,6 +2,8 @@ package com.ppiyong.backend.api.hospital.controller;
 
 import com.ppiyong.backend.api.hospital.dto.HospitalSaveRequest;
 import com.ppiyong.backend.api.hospital.service.LikeHospitalService;
+import com.ppiyong.backend.global.exception.CustomException;
+import com.ppiyong.backend.global.exception.ErrorCode;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,9 @@ public class LikeHospitalController {
     public void likeHospital(
             @RequestHeader("Authorization") String authToken,
             @RequestBody HospitalSaveRequest hospitalSaveRequest) {
+        if (authToken == null || authToken.isEmpty()) {
+            throw CustomException.of(ErrorCode.EMPTY_TOKEN);
+        }
         likeHospitalService.like(authToken, hospitalSaveRequest);
     }
 
@@ -28,6 +33,9 @@ public class LikeHospitalController {
     public void unlikeHospital(
             @RequestHeader("Authorization") String authToken,
             @PathVariable("hospitalId") Long hospitalId) {
+        if (authToken == null || authToken.isEmpty()) {
+            throw CustomException.of(ErrorCode.EMPTY_TOKEN);
+        }
         likeHospitalService.unlike(authToken, hospitalId);
     }
 
@@ -35,6 +43,9 @@ public class LikeHospitalController {
     @GetMapping("/liked")
     public List<HospitalSaveRequest> getLikedHospitals(
             @RequestHeader("Authorization") String authToken) {
+        if (authToken == null || authToken.isEmpty()) {
+            throw CustomException.of(ErrorCode.EMPTY_TOKEN);
+        }
         return likeHospitalService.getLikedHospitals(authToken);
     }
 }
