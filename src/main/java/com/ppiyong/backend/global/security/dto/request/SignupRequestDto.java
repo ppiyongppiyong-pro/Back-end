@@ -17,7 +17,8 @@ public record SignupRequestDto (
         String password,
         @Schema(name = "전화번호", example = "010-1111-1111")
         String phoneNumber,
-        @Schema(name = "성별", example = "female")
+        @Schema(name = "성별", example = "female",
+        allowableValues = {"male", "female"})
         String gender,
         @Schema(name = "보호자 전화번호", example = "010-1111-1111")
         String parentPhoneNumber,

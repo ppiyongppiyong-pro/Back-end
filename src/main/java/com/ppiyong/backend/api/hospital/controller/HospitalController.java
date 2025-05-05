@@ -31,12 +31,11 @@ public class HospitalController {
             @RequestParam String categoryName,
             @RequestHeader(name = "Authorization") String authToken
     ) {
-        // 1. 토큰 검증 (헤더가 없거나 빈 문자열인 경우)
-        if (authToken == null || authToken.isEmpty()) {
-            throw CustomException.of(ErrorCode.EMPTY_TOKEN);
-        }
 
-        // 2. x, y 좌표 검증
+        String token = authToken.startsWith("Bearer ") ? authToken.substring(7) : authToken;
+
+        // TODO: 서비스 로직에서 구현하기
+        // 1. x, y 좌표 검증
         if (x == null) {
             throw CustomException.of(ErrorCode.MISSING_X_COORDINATE);
         }
@@ -44,16 +43,15 @@ public class HospitalController {
             throw CustomException.of(ErrorCode.MISSING_Y_COORDINATE);
         }
 
-        // 카테고리 누락
+        // 2. 카테고리 누락
         if (categoryName == null || categoryName.isBlank()) {
             throw CustomException.of(ErrorCode.MISSING_CATEGORY_NAME);
         }
-
         Department department = null;
         if (categoryName != null && !"진료과 선택".equals(categoryName)) {
             department = Department.from(categoryName);
         }
 
-        return hospitalService.searchHospitals(authToken, page, size, x, y, department);
+        return hospitalService.searchHospitals(token, page, size, x, y, department);
     }
 }
