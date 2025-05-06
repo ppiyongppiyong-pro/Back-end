@@ -1,6 +1,6 @@
 services:
   ppiyong-api:
-    build: .
+    image: ghcr.io/${ORG_NAME}/ppiyong-api:latest
     ports:
       - "8080:8080"
     env_file:
