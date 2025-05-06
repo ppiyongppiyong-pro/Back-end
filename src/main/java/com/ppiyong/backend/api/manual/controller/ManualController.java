@@ -115,4 +115,5 @@ public class ManualController {
         String token = authToken.startsWith("Bearer ") ? authToken.substring(7) : authToken;
         return manualService.getLikedManuals(token);
     }
+
 }
