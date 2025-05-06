@@ -76,7 +76,8 @@ public class SecurityConfig {
                         "/swagger-ui.html",
                         "/swagger-resources/**",
                         "/webjars/**",
-                        "/**").permitAll()  // TODO : 추후에 접근 설정 추가
+                        "/auth/signup",
+                        "/auth/login/**").permitAll()
                 .anyRequest().authenticated()
         );
     }

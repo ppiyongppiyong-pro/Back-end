@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -23,7 +22,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
 @RequiredArgsConstructor
 @Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -39,8 +37,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
         System.out.println("Request path: " + path);
 
-        // TODO : Path 수정
-        boolean shouldNotFilter = path.startsWith("/");
+        boolean shouldNotFilter = path.startsWith("/auth/signup") ||
+                path.startsWith("/auth/login/") ||
+                path.startsWith("/swagger-ui/") ||
+                path.startsWith("/api/v1/manuals") ||
+                path.startsWith("/api/v1/manuals/category") ||
+                path.startsWith("/api/v1/manuals/**");
         System.out.println("Should not filter: " + shouldNotFilter);
 
         return shouldNotFilter;

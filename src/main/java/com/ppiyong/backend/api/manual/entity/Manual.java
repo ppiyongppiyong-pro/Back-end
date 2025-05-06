@@ -18,6 +18,7 @@ public class Manual {
 
     @Column(name = "manual_summary")
     private String manualSummary;
+
     @Lob
     private String detail;
 

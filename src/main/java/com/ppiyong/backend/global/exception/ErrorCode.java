@@ -12,14 +12,26 @@ public enum ErrorCode {
     INTERVAL_SERVER_ERROR(500, "SE001", "서버 내부의 오류입니다."),
     TEST_ERROR(404, "TEST", "테스트 에러입니다."),
 
-    // Manual
+
+    // Manual 파라미터별 구체적 누락 예외
+    MISSING_NAME_PARAM(400, "RE002", "이름 파라미터가 누락되었습니다."),
+    MISSING_CATEGORY_PARAM(400, "RE003", "카테고리 파라미터가 누락되었습니다."),
+    MISSING_KEYWORD_PARAM(400, "RE004", "키워드 파라미터가 누락되었습니다."),
+    MISSING_PATH_VARIABLE(400, "RE005", "경로 변수가 누락되었습니다."),
+    // Manual like
     MANUAL_NOT_FOUND(404, "ME001", "매뉴얼을 찾을 수 없습니다."),
+    MANUAL_IS_EMPTY(404, "ME002", "즐겨찾기한 매뉴얼이 없습니다."),
 
 
-    // Hospital
+
+    // Hospital 파라미터별 구체적 누락 예외
+    MISSING_CATEGORY_NAME(400, "RE004", "카테고리 이름이 없습니다."),
+    INVALID_COORDINATE_FORMAT(400, "RE007", "좌표 형식이 유효하지 않습니다."),
     MISSING_X_COORDINATE(400, "RE002", "X 좌표가 없습니다."),
     MISSING_Y_COORDINATE(400, "RE003", "Y 좌표가 없습니다."),
-    MISSING_CATEGORY_NAME(400, "RE004", "카테고리 이름이 없습니다."),
+    //hosptial like
+    HOSPITAL_NOT_FOUND(404, "HO001", "병원을 찾을 수 없습니다."),
+    HOSPITAL_IS_EMPTY(404, "HO002", "좋아요 내역이 없습니다."),
 
 
     // Token

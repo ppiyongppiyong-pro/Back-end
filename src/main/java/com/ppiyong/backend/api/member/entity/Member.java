@@ -3,9 +3,11 @@ package com.ppiyong.backend.api.member.entity;
 import com.ppiyong.backend.api.common.BaseEntity;
 import com.ppiyong.backend.api.member.common.Role;
 import com.ppiyong.backend.api.member.common.Type;
+import com.ppiyong.backend.api.member.dto.response.MypageResponseDto;
 import com.ppiyong.backend.global.security.dto.response.SignupResponseDto;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.util.StringUtils;
 
 @Entity
 @Table(name = "member")
@@ -48,7 +50,10 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public static SignupResponseDto toDto(Member member) {
+    @Column(name = "resident_no", length = 8)
+    private String residentNo;
+
+    public static SignupResponseDto toSignupDto(Member member) {
 
         return SignupResponseDto.builder()
                 .email(member.getEmail())
@@ -58,5 +63,26 @@ public class Member extends BaseEntity {
                 .parentPhoneNumber(member.getParentPhoneNumber())
                 .address(member.getAddress())
                 .build();
+    }
+
+    public static MypageResponseDto toMypageDto(Member member) {
+
+        return MypageResponseDto.builder()
+                .email(member.getEmail())
+                .name(member.getName())
+                .phoneNumber(member.getPhoneNumber())
+                .gender(member.getGender())
+                .parentPhoneNumber(member.getParentPhoneNumber())
+                .address(member.getAddress())
+                .residentNo(member.getResidentNo())
+                .build();
+    }
+
+    // 정보 수정하기
+    public void updateMember(String name, String phoneNumber, String address, String parentPhoneNumber) {
+        if (StringUtils.hasText(name)) this.name = name;
+        if (StringUtils.hasText(phoneNumber)) this.phoneNumber = phoneNumber;
+        if (StringUtils.hasText(address)) this.address = address;
+        if (StringUtils.hasText(parentPhoneNumber)) this.parentPhoneNumber = parentPhoneNumber;
     }
 }
