@@ -31,27 +31,8 @@ public class HospitalController {
             @RequestParam String categoryName,
             @RequestHeader(name = "Authorization") String authToken
     ) {
-
         String token = authToken.startsWith("Bearer ") ? authToken.substring(7) : authToken;
-
-        // TODO: 서비스 로직에서 구현하기
-        // 1. x, y 좌표 검증
-        if (x == null) {
-            throw CustomException.of(ErrorCode.MISSING_X_COORDINATE);
-        }
-        if (y == null) {
-            throw CustomException.of(ErrorCode.MISSING_Y_COORDINATE);
-        }
-
-        // 2. 카테고리 누락
-        if (categoryName == null || categoryName.isBlank()) {
-            throw CustomException.of(ErrorCode.MISSING_CATEGORY_NAME);
-        }
-        Department department = null;
-        if (categoryName != null && !"진료과 선택".equals(categoryName)) {
-            department = Department.from(categoryName);
-        }
-
-        return hospitalService.searchHospitals(token, page, size, x, y, department);
+        return hospitalService.searchHospitals(token, page, size, x, y, categoryName);
     }
 }
+
