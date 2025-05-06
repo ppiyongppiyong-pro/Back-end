@@ -3,6 +3,7 @@ package com.ppiyong.backend.api.hospital.controller;
 import com.ppiyong.backend.api.hospital.dto.HospitalSaveRequest;
 import com.ppiyong.backend.api.hospital.service.LikeHospitalService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/hospitals")
 @RequiredArgsConstructor
+@Tag(name = "EmergencyMap_Like", description = "지도 즐겨찾기 API")
 public class LikeHospitalController {
 
     private final LikeHospitalService likeHospitalService;
