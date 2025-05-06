@@ -18,10 +18,15 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      # Activate .env
+      - name: activate .env
+        run: echo "${{ secrets.ENV }}" > .env
+
       # Build Gradle
       - name: Build With Gradle
         run: |
           chmod +x ./gradlew
+          ./gradlew clean
           ./gradlew build -x test
       # Docker login
       - name: Docker Login to GHCR
