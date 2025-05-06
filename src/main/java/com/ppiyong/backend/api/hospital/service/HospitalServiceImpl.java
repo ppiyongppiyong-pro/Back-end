@@ -34,23 +34,26 @@ public class HospitalServiceImpl implements HospitalService {
     private static final String distance = "distance";
 
     @Override
-    public HospitalSearchResponse searchHospitals(String authToken, Integer page, Integer size, Float x, Float y, Department categoryName) {
+    public HospitalSearchResponse searchHospitals(String authToken, Integer page, Integer size, Float x, Float y, String categoryName) {
+        // 0. 파라미터 검증
+        validateParameters(x, y, categoryName);
+
         // 1. 사용자 정보 추출
         Long memberId = tokenProvider.getMemberIdFromToken(authToken);
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> CustomException.of(ErrorCode.MEMBER_NOT_FOUND));
 
-        // 2. 카카오 API로 병원 검색
-        Department effectiveCategory = (categoryName != null && "진료과 선택".equals(categoryName.getDisplayName()))
-                ? null : categoryName;
-        String categoryNameValue = (effectiveCategory != null) ? effectiveCategory.getDisplayName() : null;
+        // 2. 카테고리 변환
+        Department effectiveCategory = convertCategory(categoryName);
 
+        // 3. 카카오 API로 병원 검색
+        String categoryNameValue = (effectiveCategory != null) ? effectiveCategory.getDisplayName() : null;
         MapHospitalSearchResult response = kakaoHospitalApiClient.searchHospitals(
                 CategoryGroupCode.HP8.name(),
                 x, y, categoryNameValue, radius, page, size, distance
         );
 
-        // 3. 필터링된 문서 가져오기 (null-safe)
+        // 4. 필터링된 문서 가져오기 (null-safe)
         List<HospitalInfoOnMap> filteredHospitalInfoOnMaps =
                 response.getHospitalInfoOnMaps() != null
                         ? response.getHospitalInfoOnMaps()
@@ -65,14 +68,29 @@ public class HospitalServiceImpl implements HospitalService {
                     .toList();
         }
 
-        // 4. 사용자가 좋아요한 병원 ID 목록 조회
+        // 5. 사용자가 좋아요한 병원 ID 목록 조회
         List<LikedHospital> likedHospitals = likedHospitalRepository.findByMemberAndIsLikeTrue(member);
         Set<Long> likedHospitalIds = likedHospitals.stream()
                 .map(lh -> lh.getHospital().getHospitalId())
                 .collect(Collectors.toSet());
 
-        // 5. 응답 생성 (likedHospitalIds 전달)
+        // 6. 응답 생성 (likedHospitalIds 전달)
         return HospitalSearchResponse.ofFiltered(response, filteredHospitalInfoOnMaps, likedHospitalIds);
+    }
+
+    private void validateParameters(Float x, Float y, String categoryName) {
+        if (x == null) throw CustomException.of(ErrorCode.MISSING_X_COORDINATE);
+        if (y == null) throw CustomException.of(ErrorCode.MISSING_Y_COORDINATE);
+        if (categoryName == null || categoryName.isBlank()) {
+            throw CustomException.of(ErrorCode.MISSING_CATEGORY_NAME);
+        }
+    }
+
+    private Department convertCategory(String categoryName) {
+        if ("진료과 선택".equals(categoryName)) {
+            return null;
+        }
+        return Department.from(categoryName);
     }
 
     private String extractDepartmentName(String categoryName) {

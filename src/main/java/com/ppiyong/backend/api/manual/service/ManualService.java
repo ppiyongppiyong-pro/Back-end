@@ -33,7 +33,11 @@ public class ManualService {
     private final TokenProvider tokenProvider;
 
     // 1. 이름으로 매뉴얼 검색
-    public List<ManualRespondDto> getManuals(String name) {
+    public List<ManualRespondDto> getManuals(String name, String authToken) {
+        Long memberId = tokenProvider.getMemberIdFromToken(authToken);
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> CustomException.of(ErrorCode.MEMBER_NOT_FOUND));
+
         List<Manual> manuals = (name == null || name.isBlank())
                 ? manualRepository.findAll()
                 : manualRepository.findByNameContaining(name);
@@ -44,12 +48,26 @@ public class ManualService {
     }
 
     // 2. 검색 자동완성
-    public List<String> autocomplete(String name) {
+    public List<String> autocomplete(String name, String authToken) {
+        if (name == null || name.isBlank()) {
+            throw CustomException.of(ErrorCode.MISSING_NAME_PARAM);
+        }
+        Long memberId = tokenProvider.getMemberIdFromToken(authToken);
+        memberRepository.findById(memberId)
+                .orElseThrow(() -> CustomException.of(ErrorCode.MEMBER_NOT_FOUND));
+
         return manualRepository.autocompleteByName(name);
     }
 
     // 3. 카테고리별 매뉴얼 조회
-    public List<ManualCategoryRespondDto> getManualsByCategory(String category) {
+    public List<ManualCategoryRespondDto> getManualsByCategory(String category, String authToken) {
+        if (category == null || category.isBlank()) {
+            throw CustomException.of(ErrorCode.MISSING_CATEGORY_PARAM);
+        }
+        Long memberId = tokenProvider.getMemberIdFromToken(authToken);
+        memberRepository.findById(memberId)
+                .orElseThrow(() -> CustomException.of(ErrorCode.MEMBER_NOT_FOUND));
+
         Category cat = Category.fromDisplayName(category);
         List<Manual> manuals = manualRepository.findByCategory(cat);
 
@@ -59,14 +77,28 @@ public class ManualService {
     }
 
     // 4. 매뉴얼 상세 조회
-    public ManualDetailRespondDto getManualDetail(String name) {
+    public ManualDetailRespondDto getManualDetail(String name, String authToken) {
+        if (name == null || name.isBlank()) {
+            throw CustomException.of(ErrorCode.MISSING_PATH_VARIABLE);
+        }
+        Long memberId = tokenProvider.getMemberIdFromToken(authToken);
+        memberRepository.findById(memberId)
+                .orElseThrow(() -> CustomException.of(ErrorCode.MEMBER_NOT_FOUND));
+
         Manual manual = manualRepository.findByName(name)
                 .orElseThrow(() -> CustomException.of(ErrorCode.MANUAL_NOT_FOUND));
         return manualMapper.toDetailDto(manual);
     }
 
     // 5. 키워드로 매뉴얼 검색
-    public List<ManualKeywordRespondDto> searchByKeyword(String keyword) {
+    public List<ManualKeywordRespondDto> searchByKeyword(String keyword, String authToken) {
+        if (keyword == null || keyword.isBlank()) {
+            throw CustomException.of(ErrorCode.MISSING_KEYWORD_PARAM);
+        }
+        Long memberId = tokenProvider.getMemberIdFromToken(authToken);
+        memberRepository.findById(memberId)
+                .orElseThrow(() -> CustomException.of(ErrorCode.MEMBER_NOT_FOUND));
+
         List<Manual> manuals = manualRepository.findByKeyword(keyword);
         return manuals.stream()
                 .map(manualMapper::toKeywordDto)
