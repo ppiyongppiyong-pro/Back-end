@@ -69,7 +69,7 @@ jobs:
       - name: copy nginx.conf
         run: |
           cd ~
-          sudo cp ~/nginx/nginx.conf /etc/nginx/server/nginx.conf
+          sudo cp /nginx/nginx.conf /etc/nginx/server/nginx.conf
 
   deploy:
     runs-on: ubuntu-24.04
