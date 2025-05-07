@@ -28,16 +28,17 @@ jobs:
           chmod +x ./gradlew
           ./gradlew clean
           ./gradlew build -x test
+
       # Docker login
       - name: Docker Login to GHCR
-        run: echo ${{ secrets.YOUYEON_GITHUB_PAT }} | docker login ghcr.io -u ${{ secrets.YOUYOEN_GITHUB_USERNAME }} --password-stdin
+        run: echo ${{ secrets.YOUYEON_GITHUB_PAT }} | docker login ghcr.io -u ${{ secrets.YOUYEON_GITHUB_USERNAME }} --password-stdin
 
       # Image Build
       - name: Build Docker Image
         run: docker build -t ghcr.io/${{ secrets.ORG_NAME }}/ppiyong-api:latest .
 
       # Docker container push
-      - name: Push Docker Imgae
+      - name: Push Docker Image
         run: docker push ghcr.io/${{ secrets.ORG_NAME }}/ppiyong-api:latest
 
   transfer:
@@ -65,6 +66,11 @@ jobs:
           source: ./nginx/
           target: /home/ubuntu/
 
+      - name: copy nginx.conf
+        run: |
+          cd ~
+          sudo cp ~/nginx/nginx.conf /etc/nginx/server/nginx.conf
+
   deploy:
     runs-on: ubuntu-24.04
     needs: transfer
@@ -85,7 +91,7 @@ jobs:
             echo "${{ secrets.ENV }}" > .env
             
             # 3. GHCR 로그인
-            echo "${{ secrets.YOUYEON_GITHUB_PAT }}" | docker login ghcr.io -u ${{ secrets.YOUYOEN_GITHUB_USERNAME }} --password-stdin
+            echo "${{ secrets.YOUYEON_GITHUB_PAT }}" | docker login ghcr.io -u ${{ secrets.YOUYEON_GITHUB_USERNAME }} --password-stdin
             
             # 4. pull image:latest
             cd ~
