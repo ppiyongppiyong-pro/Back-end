@@ -78,7 +78,8 @@ public class SecurityConfig {
                         "/swagger-resources/**",
                         "/webjars/**",
                         "/auth/signup",
-                        "/auth/login/**").permitAll()
+                        "/auth/login/**",
+                        "/auth/url/kakao").permitAll()
                 .anyRequest().authenticated()
         );
     }

@@ -4,11 +4,9 @@ import com.ppiyong.backend.global.exception.CustomException;
 import com.ppiyong.backend.global.security.dto.response.LoginResponseDto;
 import com.ppiyong.backend.global.security.service.KakaoLoginServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -35,9 +33,13 @@ public class KakaoLoginController {
             인가 코드 요청 url을 통하여 코드를 받습니다.<br>
             로그인 성공시 토큰을 발급합니다.
             구체적인 회원정보는 마이페이지 수정에서 처리합니다.
-            """, parameters = @Parameter(name = "Code", description = "카카오로부터 받은 인가 코드"))
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "401", description = "카카오 토큰 받기 실패",
+            """,
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "로그인 성공 - 토큰 발급 완료"
+                    ),
+                    @ApiResponse(responseCode = "401", description = "카카오 토큰 받기 실패",
                     content = @Content(mediaType = "application/json",
                             examples = @ExampleObject(value = """
                 {
@@ -57,7 +59,6 @@ public class KakaoLoginController {
             """)))})
     @PostMapping("/login/kakao")
     public LoginResponseDto callback(
-            @Parameter(description = "카카오로부터 얻은 인가 코드")
             @RequestParam String code,
             HttpServletResponse response
     ) throws CustomException {
