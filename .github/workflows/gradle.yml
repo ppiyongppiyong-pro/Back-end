@@ -66,11 +66,6 @@ jobs:
           source: ./nginx/
           target: /home/ubuntu/
 
-      - name: copy nginx.conf
-        run: |
-          cd ~
-          sudo cp /home/ubuntu/nginx/nginx.conf /etc/nginx/server/nginx.conf
-
   deploy:
     runs-on: ubuntu-24.04
     needs: transfer
