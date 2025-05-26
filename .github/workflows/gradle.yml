@@ -89,7 +89,6 @@ jobs:
             echo "${{ secrets.YOUYEON_GITHUB_PAT }}" | docker login ghcr.io -u ${{ secrets.YOUYEON_GITHUB_USERNAME }} --password-stdin
             
             # 4. pull image:latest
-            cd ~
             docker pull ghcr.io/${{ secrets.ORG_NAME }}/ppiyong-api:latest
             
             # 5. 환경변수 설정
