@@ -41,3 +41,7 @@ springdoc:
     path: /swagger-ui
   api-docs:
     path: /v3/api-docs
+
+swagger:
+  server:
+    url: ${LOCAL_BASE_URL}
